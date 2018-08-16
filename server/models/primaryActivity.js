@@ -12,9 +12,98 @@ class PrimaryActivity {
         try {
             let sql = `insert into primary_activities (id, name, department_id) values (:id, :name, :department_id)`;
             let binds = {id: this.id, name: this.name, department_id: this.department_id};
-            let options = {autoCommit: true}
+            let options = {autoCommit: true};
             let result = await conn.execute(sql, binds, options);
             return binds;
+        } catch (e) {
+            throw new Error(e);
+        }
+    }
+    static async findOneAndRemoveById({conn, id}) {
+        try {
+            let pa = await PrimaryActivity.findById({conn, id});
+            if (!pa) {
+                return new Error(`No Primary Activity Found with Id: ${id}`);
+            }
+            let sql = ` delete
+                        from
+                            primary_activities
+                        where
+                            id = :id`;
+            let binds = {id};
+            let options = {autoCommit: true};
+            let result = await conn.execute(sql, binds, options)
+            return pa;
+        } catch (e) {
+            throw new Error(e);
+        }
+    }
+    static async findOneAndUpdateById({conn, id, name, department_id}) {
+        try {
+            let pa = await PrimaryActivity.findById({conn, id});
+            if (!pa) {
+                return new Error(`No Primary Activity Found with Id: ${id}`);
+            }
+            if (!name) {
+                name = pa.name;
+            }
+            if (!department_id) {
+                department_id = pa.department_id;
+            }
+            let sql = ` update primary_activities
+                        set
+                            name = :name,
+                            department_id = :department_id
+                        where
+                            id = :id`;
+            let binds = {id, name, department_id};
+            let options = {autoCommit: true};
+            let result = await conn.execute(sql, binds, options)
+            pa = await PrimaryActivity.findById({conn, id});
+            return pa;
+        } catch (e) {
+            throw new Error(e);
+        }
+    }
+    static async findById({conn, id}) {
+        try {
+            let sql = ` select
+                            id as "id",
+                            name as "name",
+                            department_id as "department_id"
+                        from
+                            primary_activities
+                        where
+                            id = :id`;
+            let binds = {id};
+            let options = {autoCommit: true};
+            let result = await conn.execute(sql, binds, options)
+            return {id: result.rows[0][0], name: result.rows[0][1], department_id: result.rows[0][2]}
+        } catch (e) {
+            throw new Error(e);
+        }
+    }
+    static async findByDeptId({conn, department_id}) {
+        try {
+            let sql = ` select
+                            id as "id",
+                            name as "name",
+                            department_id as "department_id"
+                        from
+                            primary_activities
+                        where
+                            department_id = :department_id`;
+            let binds = {department_id};
+            let options = {autoCommit: true};
+            let result = await conn.execute(sql, binds, options)
+            let output = [];
+            
+            result.rows.forEach(element => {
+                output = output.concat({id: element[0], name: element[1], department_id: element[2]});
+            });
+            // console.log(result);
+            // console.log(output);
+            return output;
         } catch (e) {
             throw new Error(e);
         }
