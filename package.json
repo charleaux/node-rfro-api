@@ -1,0 +1,35 @@
+{
+  "name": "node-rfro-api",
+  "version": "1.0.0",
+  "description": "",
+  "main": "server/server.js",
+  "scripts": {
+    "start": "node server/server.js",
+    "nmstart": "nodemon server/server.js",
+    "test": "export NODE_ENV=test || SET \"NODE_ENV=test\" && mocha server/**/*.test.js --timeout 10000",
+    "test-watch": "nodemon --exec \"npm test\""
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/charleaux/node-rfro-api.git"
+  },
+  "author": "Charles Torry",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/charleaux/node-rfro-api/issues"
+  },
+  "homepage": "https://github.com/charleaux/node-rfro-api#readme",
+  "devDependencies": {
+    "expect": "^23.5.0",
+    "mocha": "^5.2.0",
+    "nodemon": "^1.18.3",
+    "supertest": "^3.1.0"
+  },
+  "dependencies": {
+    "body-parser": "^1.18.3",
+    "express": "^4.16.3",
+    "lodash": "^4.17.10",
+    "oracledb": "^2.3.0",
+    "uuid": "^3.3.2"
+  }
+}

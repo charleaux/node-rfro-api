@@ -1,0 +1,22 @@
+{
+    "test": {
+        "PORT": 3000,
+        "dbPoolUser": "",
+        "dbPoolPassword": "",
+        "dbPoolConnectString": "",
+        "dbPoolPoolMin": 10,
+        "dbPoolPoolMax": 10,
+        "dbPoolPoolIncrement": 0,
+        "JWT_SECRET": ""
+    },
+    "development": {
+        "PORT": 3000,
+        "dbPoolUser": "",
+        "dbPoolPassword": "",
+        "dbPoolConnectString": "",
+        "dbPoolPoolMin": 10,
+        "dbPoolPoolMax": 10,
+        "dbPoolPoolIncrement": 0,
+        "JWT_SECRET": ""
+    }
+}
